@@ -95,11 +95,5 @@ function editTaskStorage(id, title, text) {
     storage.todos[taskIndex].title = title;
     storage.todos[taskIndex].text = text;
 
-    const editedTask = {
-        title,
-        text,
-        id
-    };
-
-    return editedTask;
+    return storage.todos[taskIndex];
 }
