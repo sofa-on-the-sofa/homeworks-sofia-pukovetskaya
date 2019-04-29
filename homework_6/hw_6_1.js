@@ -19,8 +19,9 @@ console.log(divByQuerySelector, divChildren);
 но формулировки задач не всегда однозначны, я решила сделать так */
 
 // 4. б) Вывести в консоль первый div и все его дочерние узлы, кроме первого и последнего
-console.log(divByQuerySelector);
 
-for (var i = 1; i < divChildren.length - 1; i++) {
-    console.log(divChildren[i]);
-  }
+let divChildrenArray = Array.from(divChildren);
+
+let notAllDivChildren = divChildrenArray.slice(1, 3);
+
+console.log(divByQuerySelector, notAllDivChildren);

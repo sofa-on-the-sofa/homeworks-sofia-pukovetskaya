@@ -17,7 +17,7 @@ console.log(isParent(parent, child));
 let allLinks = document.links;
 
 for (let el of allLinks) {
-    if (!el.closest('ul')) {
+    if (!el.closest('li')) {
         console.log(el);
     }
 }
