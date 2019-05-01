@@ -1,7 +1,7 @@
 // 1. Найти параграф и получить его текстовое содержимое (только текст!)
 let paragraph = document.querySelector('p');
 
-console.log(paragraph.innerHTML);
+console.log(paragraph.innerText);
 
 
 /* 2. Создать функцию, которая принимает в качестве аргумента узел DOM и возвращает информацию
@@ -13,13 +13,7 @@ let getNodeInfo = (node) => {
   let nodeName = node.nodeName;
   let nodeChildrenQuantity = node.children.length;
 
-  let nodeInfo = {
-    nodeType,
-    nodeName,
-    nodeChildrenQuantity
-  }
-
-  return nodeInfo;
+  return {nodeType, nodeName, nodeChildrenQuantity};
 }
 
 console.log(getNodeInfo(list));
@@ -29,17 +23,9 @@ console.log(getNodeInfo(list));
 let arrayWithLinksText = [];
 let listOfLinks = document.querySelectorAll('li a');
 
-Array.prototype.forEach.call(listOfLinks, (element) => arrayWithLinksText.push(element.innerHTML));
+listOfLinks.forEach((element) => arrayWithLinksText.push(element.innerHTML));
 
 console.log(arrayWithLinksText);
-
-//Или так. Очень похоже на предыдущий вариант, конечно, просто хотела попробовать с Array.from
-let secondArrayWithLinksText = [];
-let arrayFromLinks = Array.from(document.querySelectorAll('li a'));
-
-arrayFromLinks.forEach((element) => secondArrayWithLinksText.push(element.innerHTML));
-
-console.log(secondArrayWithLinksText);
 
 
 /* 4. В параграфе заменить все дочерние текстовые узлы на “-text-” (вложенные теги должны остаться). Конечный результат:
@@ -52,7 +38,7 @@ paragraphChildren.forEach((element) => element.data = '-text-');
 // 5. Найти в коде список ul и добавить класс “list”
 list.classList.add('list');
 
-console.log(list); //просто чтобы посмотреть на результат
+console.log(list);
 
 
 // 6. Найти в коде ссылку, находящуюся после списка ul, и добавить id=link
@@ -64,10 +50,10 @@ console.log(linkAfterList);
 
 
 // 7. На li через один (начиная с самого первого) установить класс “item”
-let listOfLi = Array.from(document.querySelectorAll('li'));
+let listOfLi = document.querySelectorAll('li');
 
-listOfLi.forEach((element) => {
-  if (listOfLi.indexOf(element) % 2 === 0) {
+listOfLi.forEach((element, index) => {
+  if (index % 2 === 0) {
     element.classList.add('item');
   }
 });
@@ -91,17 +77,13 @@ console.log(allLinks);
 <li class=”new-item”>item 6</li>
 </ul>
 Вручную номер li не ставить оно должно подставляться в зависимости от кол-ва лишек в списке. */
-
-//делала с учетом того, что лектор просила применить createDocumentFragment и создать столько же лишек, сколько их было изначально
 let fragment = document.createDocumentFragment();
-let counter = listOfLi.length + 1;
 
-listOfLi.forEach((element) => {
+listOfLi.forEach((element, index) => {
     let liElement = document.createElement('li');
 
     liElement.classList.add('new-item');
-    liElement.innerText = `item ${counter}`;
-    counter++;
+    liElement.innerText = `item ${index + listOfLi.length + 1}`;
 
     fragment.appendChild(liElement);
 });
@@ -110,12 +92,11 @@ list.appendChild(fragment);
 
 
 // 10. В каждую ссылку, которая находятся внутри списка ul  добавить по тегу strong (в каждую ссылку один - strong)
-Array.prototype.forEach.call(listOfLinks, (element) => {
+listOfLinks.forEach((element) => {
     let strongElement = document.createElement('strong');
 
-    strongElement.innerText = `${element.innerHTML}`;
+    strongElement.innerText = element.innerHTML;
     element.innerHTML = '';
-    //на лекции договорились не просто добавлять стронг, а оборачивать в него текст внутри ссылки, другого способа не придумала
 
     element.appendChild(strongElement);
 });
@@ -144,7 +125,8 @@ console.log(elementMark);
 //13. Отсортировать li внутри списка в обратном порядке (по тексту внутри)
 let arrayOfLi = Array.from(document.querySelectorAll('li'));
 let reverseArrayOfLi = arrayOfLi.sort((prev, next) => -1);
+let fragmentForLi = document.createDocumentFragment();
 
-for (let i = 0; i < reverseArrayOfLi.length; i++) {
-    list.appendChild(reverseArrayOfLi[i]);
-}
+reverseArrayOfLi.forEach((element) => fragmentForLi.appendChild(element));
+
+list.appendChild(fragmentForLi);
