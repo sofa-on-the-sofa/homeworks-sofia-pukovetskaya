@@ -30,6 +30,10 @@ let list = document.querySelector('ul');
 generateButton.addEventListener('click', () => {
   let liElement = document.createElement('li');
 
-  liElement.innerText = `Item ${document.querySelectorAll('li').length + 1}`;
+  //вариант 1
+  // liElement.innerText = `Item ${document.querySelectorAll('li').length + 1}`;
+
+  //вариант 2
+  liElement.innerText = `Item ${++document.querySelectorAll('li').length}`;
   list.appendChild(liElement);
 });
