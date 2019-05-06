@@ -3,21 +3,16 @@
 При повторном клике на этот же dropdown-item блок dropdown-menu должен закрыться. При клике на любой другой dropdown-item
 уже открытый dropdown-menu должен закрываться а на тот который кликнули открываться. */
 let menu = document.querySelector('.menu');
-let dropdownMenu = document.querySelectorAll('.dropdown-menu');
 
-menu.addEventListener('click', (event) => {
-  let target = event.target;
+menu.addEventListener('click', ({target}) => {
+  const li = target.tagName === 'LI' ? target : target.closest('li');
+  const divLi = li.querySelector('.dropdown-menu');
 
-  if (target.parentElement.className === 'dropdown-item') {
-    if (target.nextElementSibling.className.includes('d-none')) {
-      dropdownMenu.forEach((element) => {
-        if (!element.className.includes('d-none')) {
-          element.classList.add('d-none');
-        }
-      });
-      target.nextElementSibling.classList.remove('d-none');
-    } else {
-      target.nextElementSibling.classList.add('d-none');
-    }
+  if (divLi) {
+    divLi.classList.toggle('d-none');
+
+    menu.querySelectorAll('.dropdown-menu').forEach((item) => {
+        if(item !== divLi) item.classList.add('d-none');
+    });
   }
 });
