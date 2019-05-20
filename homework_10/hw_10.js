@@ -52,29 +52,37 @@ d. получить строку-перевертыш
 модуль.установитьСтроку(‘abcde’);
 модуль.получитьСтроку(); // ‘abcde’
 модуль.получитьДлину(); // 5 */
-let workWithString = (function(y) {
+let workWithString = (function() {
+    let input = '';
+
     function setString (str) {
-        str === '' ? str = '' : str;
-        typeof str === 'number' ? String(str) : str;
-        y = str;
-        return y;
+        if (!str) {
+            return input;
+        } else {
+            if (typeof str !== 'string') {
+                return input = String(str);
+            } else {
+                input = str;
+            }
+        }
+        return input;
     }
 
-    function getString (str) {
-        return str.valueOf();
+    function getString () {
+        return input;
     }
 
     function strLength() {
-        return y.length;
+        return input.length;
     }
 
-    function getReverse (str){
+    function getReverse (){
        let reversedString = '';
 
-       let i = (str.length - 1);
+       let i = (input.length - 1);
 
        while (i >= 0) {
-			reversedString += str[i];
+			reversedString += input[i];
   			i--;
   	   }
        return reversedString;
@@ -88,12 +96,12 @@ let workWithString = (function(y) {
     }
 })();
 
-let word = ('hello');
+let value = (763);
 
-console.log(workWithString.setString(word));
-console.log(workWithString.getString(word));
-console.log(workWithString.strLength());
-console.log(workWithString.getReverse(word));;
+console.log(workWithString.setString(value));
+console.log(workWithString.getString(value));
+console.log(workWithString.strLength(value));
+console.log(workWithString.getReverse(value));
 
  
 /* 4. Создайте модуль “калькулятор”, который умеет складывать, умножать, вычитать, делить
@@ -170,7 +178,7 @@ var lexus = new Car(‘lexus’, 2);
 lexus.получитьМарку(); // “Lexus”
 lexus.получитьГодВыпуска(); // 2017 (2019-2);
 Марка машины всегда должна возвращаться с большой буквы! */
-function makeCar(model, age) {
+function MakeCar(model, age) {
     this.getModel = function () {
     	let carModel = model[0].toUpperCase() + model.slice(1);
     	return carModel;
@@ -182,7 +190,7 @@ function makeCar(model, age) {
     }
 }
 
-let lexus = new makeCar('lexus', 2);
+let lexus = new MakeCar('lexus', 2);
 
 console.log(lexus.getModel());
 console.log(lexus.getYear());
@@ -194,7 +202,7 @@ console.log(lexus.getYear());
     // a. показать оригинальную строку
     // b. показать зашифрованную строку
     // Строки не должны быть доступны через this, только с помощью методов.
- function strEncrypter(str) {
+ function StrEncrypter(str) {
     this.getStr = function() {
     	return str;
     }
@@ -210,8 +218,9 @@ console.log(lexus.getYear());
     	return encryptedStr;
     }
 }    
-   
-let result = new strEncrypter(word);
+
+let word = ('hello');
+let result = new StrEncrypter(word);
 
 console.log(result.getStr());
 console.log(result.getEncryptedStr());
